@@ -1,0 +1,34 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Clipboard attack</title>
+    <style>
+        #info {
+            padding-top: 123px;
+            padding-left: 387px;
+        }
+    </style>
+</head>
+<body>
+    <div id=info>Klikk på <em>Tillat</em> ⬆ for å fortsette til siden.</div>
+    <script>
+        navigator.clipboard.readText()
+        .then(() => {
+            setInterval(() => {
+                navigator.clipboard.readText()
+                    .catch(e => e.message)
+                    .then(t => {
+                        document.getElementById('info').innerHTML = `Utklippstavle: '${t}'<br><br> Når forsvinner godkjennelsen for å hente data fra utklippstavlen?`
+                    })
+
+            }, 1000)
+        })
+        .catch(e => {
+            console.error('gjerrigknark')
+            console.error(e.message)
+        })
+    </script>
+</body>
+</html>
